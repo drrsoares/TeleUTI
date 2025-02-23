@@ -246,7 +246,6 @@
     }
     </style>
     
-    </style>
 </head>
 <body>
 
