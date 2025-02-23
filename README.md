@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -180,6 +180,72 @@
             padding: 0;
         }
     }
+    /* Adicione estes estilos ao seu CSS existente */
+    .status-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .status-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-left: 10px;
+      background-color: #ccc;
+    }
+
+    .status-ok {
+      background-color: #28a745;
+    }
+
+    .status-warning {
+      background-color: #ffc107;
+    }
+
+    .status-danger {
+      background-color: #dc3545;
+      animation: pulse 1s infinite;
+    }
+
+    .alert-box {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      color: #856404;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+
+    .checkbox-container {
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    #tempoIntubacao.warning {
+      color: #856404;
+      background-color: #fff3cd;
+    }
+
+    #tempoIntubacao.danger {
+      color: #721c24;
+      background-color: #f8d7da;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    </style>
+    
     </style>
 </head>
 <body>
@@ -220,38 +286,64 @@
       
       </section>
       <!-- Ventilação Mecânica -->
-      <section class="section">
-        <h2>Ventilação Mecânica</h2>
-        <label for="pacienteIntubado">Paciente Intubado?</label>
-        <select id="pacienteIntubado" name="pacienteIntubado" required>
-          <option value="" disabled selected>Selecione uma opção</option>
-          <option value="Sim">Sim</option>
-          <option value="Não">Não</option>
-        </select>
+<section class="section">
+  <h2>Ventilação Mecânica</h2>
+  <label for="pacienteIntubado">Paciente Intubado?</label>
+  <select id="pacienteIntubado" name="pacienteIntubado" required>
+    <option value="" disabled selected>Selecione uma opção</option>
+    <option value="Sim">Sim</option>
+    <option value="Não">Não</option>
+  </select>
 
-        <div id="intubacaoDetails" class="hidden">
-          <label for="dataIntubacao">Data de Intubação:</label>
-          <input type="date" id="dataIntubacao" name="dataIntubacao">
-
-          <label for="modoVentilacao">Modo de Ventilação:</label>
-          <select id="modoVentilacao" name="modoVentilacao">
-            <option value="" disabled selected>Selecione um modo</option>
-            <option value="PCV">PCV</option>
-            <option value="VCV">VCV</option>
-            <option value="PSV">PSV</option>
-            <option value="Outros">Outros</option>
-          </select>
-
-          <div id="psvDetails" class="hidden">
-            <label for="podeExtubar">Paciente Pode Extubar?</label>
-            <select id="podeExtubar" name="podeExtubar">
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option value="Sim">Sim</option>
-              <option value="Não">Não</option>
-            </select>
-          </div>
+  <div id="intubacaoDetails" class="hidden">
+    <div class="flex-container">
+      <div>
+        <label for="dataIntubacao">Data de Intubação:</label>
+        <input type="datetime-local" id="dataIntubacao" name="dataIntubacao">
+      </div>
+      <div>
+        <label for="tempoIntubacao">Tempo de Intubação:</label>
+        <div class="status-container">
+          <input type="text" id="tempoIntubacao" name="tempoIntubacao" readonly 
+            placeholder="Será calculado automaticamente">
+          <span id="statusIntubacao" class="status-indicator"></span>
         </div>
-      </section>
+      </div>
+    </div>
+
+    <label for="modoVentilacao">Modo de Ventilação:</label>
+    <select id="modoVentilacao" name="modoVentilacao">
+      <option value="" disabled selected>Selecione um modo</option>
+      <option value="PCV">PCV</option>
+      <option value="VCV">VCV</option>
+      <option value="PSV">PSV</option>
+      <option value="Outros">Outros</option>
+    </select>
+
+    <div id="psvDetails" class="hidden">
+      <label for="podeExtubar">Paciente Pode Extubar?</label>
+      <select id="podeExtubar" name="podeExtubar">
+        <option value="" disabled selected>Selecione uma opção</option>
+        <option value="Sim">Sim</option>
+        <option value="Não">Não</option>
+      </select>
+    </div>
+
+    <div id="traqueostomiaContainer" class="hidden">
+      <div class="alert-box">
+        <p>Paciente com mais de 5 dias de intubação. Considerar traqueostomia.</p>
+      </div>
+      <div class="checkbox-container">
+        <input type="checkbox" id="realizouTraqueostomia" name="realizouTraqueostomia">
+        <label for="realizouTraqueostomia">Realizou Traqueostomia?</label>
+      </div>
+      <div id="dataTraqueostomiaContainer" class="hidden">
+        <label for="dataTraqueostomia">Data da Traqueostomia:</label>
+        <input type="datetime-local" id="dataTraqueostomia" name="dataTraqueostomia">
+      </div>
+    </div>
+      </div>
+    </section>
 
       <!-- Sedação -->
       <section class="section">
@@ -807,6 +899,108 @@ document.addEventListener('DOMContentLoaded', function() {
     
     dataUltimaEvacuacaoInput.max = `${anoAtual}-${mesAtual}-${diaAtual}T${horaAtual}:${minutoAtual}`;
 });
-</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const pacienteIntubado = document.getElementById('pacienteIntubado');
+    const intubacaoDetails = document.getElementById('intubacaoDetails');
+    const dataIntubacao = document.getElementById('dataIntubacao');
+    const tempoIntubacao = document.getElementById('tempoIntubacao');
+    const statusIntubacao = document.getElementById('statusIntubacao');
+    const traqueostomiaContainer = document.getElementById('traqueostomiaContainer');
+    const realizouTraqueostomia = document.getElementById('realizouTraqueostomia');
+    const dataTraqueostomiaContainer = document.getElementById('dataTraqueostomiaContainer');
+    const dataTraqueostomia = document.getElementById('dataTraqueostomia');
+
+    function calcularTempoIntubacao() {
+        const dataInicio = new Date(dataIntubacao.value);
+        const agora = new Date();
+        
+        if (isNaN(dataInicio.getTime())) {
+            tempoIntubacao.value = '';
+            statusIntubacao.className = 'status-indicator';
+            traqueostomiaContainer.classList.add('hidden');
+            return;
+        }
+
+        if (dataInicio > agora) {
+            alert('A data de intubação não pode ser no futuro');
+            dataIntubacao.value = '';
+            return;
+        }
+
+        const diffMs = agora - dataInicio;
+        const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        const diffHoras = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        tempoIntubacao.value = `${diffDias} dia(s) e ${diffHoras} hora(s)`;
+
+        // Atualizar status visual
+        tempoIntubacao.classList.remove('warning', 'danger');
+        statusIntubacao.classList.remove('status-ok', 'status-warning', 'status-danger');
+
+        if (diffDias >= 11) {
+            tempoIntubacao.classList.add('danger');
+            statusIntubacao.classList.add('status-danger');
+        } else if (diffDias >= 6) {
+            tempoIntubacao.classList.add('warning');
+            statusIntubacao.classList.add('status-warning');
+        } else {
+            statusIntubacao.classList.add('status-ok');
+        }
+
+        // Mostrar opção de traqueostomia após 5 dias
+        if (diffDias > 5) {
+            traqueostomiaContainer.classList.remove('hidden');
+        } else {
+            traqueostomiaContainer.classList.add('hidden');
+            realizouTraqueostomia.checked = false;
+            dataTraqueostomia.value = '';
+        }
+    }
+
+    // Eventos
+    pacienteIntubado.addEventListener('change', function() {
+        intubacaoDetails.classList.toggle('hidden', this.value !== 'Sim');
+        if (this.value !== 'Sim') {
+            dataIntubacao.value = '';
+            calcularTempoIntubacao();
+        }
+    });
+
+    dataIntubacao.addEventListener('change', calcularTempoIntubacao);
+
+    realizouTraqueostomia.addEventListener('change', function() {
+        dataTraqueostomiaContainer.classList.toggle('hidden', !this.checked);
+        if (!this.checked) {
+            dataTraqueostomia.value = '';
+        }
+    });
+
+    dataTraqueostomia.addEventListener('change', function() {
+        const dataTraq = new Date(this.value);
+        const dataInt = new Date(dataIntubacao.value);
+        
+        if (dataTraq < dataInt) {
+            alert('A data da traqueostomia não pode ser anterior à data de intubação');
+            this.value = '';
+        }
+    });
+
+    // Atualizar a cada hora
+    setInterval(calcularTempoIntubacao, 3600000);
+
+    // Definir máximo como data/hora atual
+    function atualizarDataMaxima() {
+        const agora = new Date();
+        const dataFormatada = agora.toISOString().slice(0, 16);
+        dataIntubacao.max = dataFormatada;
+        dataTraqueostomia.max = dataFormatada;
+    }
+
+    atualizarDataMaxima();
+    setInterval(atualizarDataMaxima, 60000);
+});
+</script>       
 </body>
 </html>
