@@ -255,7 +255,7 @@
       <!-- Identificação do Paciente -->
       <section class="section">
         <h2>Identificação do Paciente</h2>
-        <label for="nomePaciente">Nome:</label>
+        <label for="nomePaciente" aria-label="Nome do Paciente">Nome:</label>
         <input type="text" id="nomePaciente" name="nomePaciente" placeholder="Digite o nome do paciente" required>
 
         <div class="flex-container">
@@ -547,6 +547,12 @@
         <button type="button" id="addAntibiotico">Adicionar Antibiótico</button>
       </section>
 
+<!-- Pendências/Condutas -->
+      <section class="section">
+        <h2>Pendências / Condutas</h2>
+        <label for="pendenciasCondutas">Observações:</label>
+        <textarea id="pendenciasCondutas" name="pendenciasCondutas" rows="5" placeholder="Insira aqui as pendências ou condutas do paciente"></textarea>
+      </section>
 
       <!-- Botões de Ação -->
       <div class="export-buttons">
@@ -1025,6 +1031,11 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(calcularTempoDesdeEvacuacao, 60000);
     setInterval(atualizarDataMaxima, 60000);
 });
+
+const calcularTempo = (inicio, fim) => {
+    const diff = fim - inicio;
+    return Math.floor(diff / (1000 * 60 * 60 * 24));
+};
 </script>
 
 </body>
