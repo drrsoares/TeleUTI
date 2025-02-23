@@ -1,4 +1,3 @@
-
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -900,7 +899,9 @@ document.addEventListener('DOMContentLoaded', function() {
     dataUltimaEvacuacaoInput.max = `${anoAtual}-${mesAtual}-${diaAtual}T${horaAtual}:${minutoAtual}`;
 });
 
-<script>
+    <script>
+        
+       <script>
 document.addEventListener('DOMContentLoaded', function() {
     const pacienteIntubado = document.getElementById('pacienteIntubado');
     const intubacaoDetails = document.getElementById('intubacaoDetails');
@@ -911,6 +912,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const realizouTraqueostomia = document.getElementById('realizouTraqueostomia');
     const dataTraqueostomiaContainer = document.getElementById('dataTraqueostomiaContainer');
     const dataTraqueostomia = document.getElementById('dataTraqueostomia');
+    const modoVentilacao = document.getElementById('modoVentilacao');
+    const psvDetails = document.getElementById('psvDetails');
 
     function calcularTempoIntubacao() {
         const dataInicio = new Date(dataIntubacao.value);
@@ -964,8 +967,18 @@ document.addEventListener('DOMContentLoaded', function() {
         intubacaoDetails.classList.toggle('hidden', this.value !== 'Sim');
         if (this.value !== 'Sim') {
             dataIntubacao.value = '';
-            calcularTempoIntubacao();
+            tempoIntubacao.value = '';
+            statusIntubacao.className = 'status-indicator';
+            traqueostomiaContainer.classList.add('hidden');
+            realizouTraqueostomia.checked = false;
+            dataTraqueostomia.value = '';
+            modoVentilacao.value = '';
+            psvDetails.classList.add('hidden');
         }
+    });
+
+    modoVentilacao.addEventListener('change', function() {
+        psvDetails.classList.toggle('hidden', this.value !== 'PSV');
     });
 
     dataIntubacao.addEventListener('change', calcularTempoIntubacao);
@@ -978,12 +991,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     dataTraqueostomia.addEventListener('change', function() {
+        if (!this.value) return;
+        
         const dataTraq = new Date(this.value);
         const dataInt = new Date(dataIntubacao.value);
+        const agora = new Date();
+        
+        if (dataTraq > agora) {
+            alert('A data da traqueostomia não pode ser no futuro');
+            this.value = '';
+            return;
+        }
         
         if (dataTraq < dataInt) {
             alert('A data da traqueostomia não pode ser anterior à data de intubação');
             this.value = '';
+            return;
         }
     });
 
@@ -1001,6 +1024,6 @@ document.addEventListener('DOMContentLoaded', function() {
     atualizarDataMaxima();
     setInterval(atualizarDataMaxima, 60000);
 });
-</script>       
+</script>
 </body>
 </html>
