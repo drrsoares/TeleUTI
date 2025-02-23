@@ -5,7 +5,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Round Matinal - UTI</title>
     <style>
-    /* Previous CSS remains the same */
+      /* Estilos Gerais */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 10px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      color: #555;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 10px 15px;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .remove-btn {
+      background-color: #dc3545;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .remove-btn:hover {
+      background-color: #c82333;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .flex-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    .flex-container > div {
+      flex: 1;
+    }
+
+    .export-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal.hidden {
+      display: none;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .confirm-btn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .confirm-btn:hover {
+      background-color: #218838;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 0 5px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      input, select, textarea, button {
+        font-size: 0.9rem;
+        padding: 8px;
+      }
+    }
 
     /* Add new styles for validation */
     .invalid {
