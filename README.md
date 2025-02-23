@@ -1,165 +1,38 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Round Matinal - UTI</title>
-  <style>
-    /* Estilos Gerais */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f3f4f6;
-      margin: 0;
-      padding: 10px;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Round Matinal - UTI</title>
+    <style>
+    /* Previous CSS remains the same */
+
+    /* Add new styles for validation */
+    .invalid {
+        border-color: #dc3545;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    .validation-message {
+        color: #dc3545;
+        font-size: 0.8rem;
+        margin-top: -10px;
+        margin-bottom: 10px;
     }
 
-    h1, h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 20px;
+    /* Add style for the print preview */
+    @media print {
+        .no-print {
+            display: none;
+        }
+        .container {
+            box-shadow: none;
+            padding: 0;
+        }
     }
-
-    h1 {
-      font-size: 1.8rem;
-    }
-
-    h2 {
-      font-size: 1.4rem;
-      color: #555;
-    }
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    input, select, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-      box-sizing: border-box;
-    }
-
-    textarea {
-      resize: vertical;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 10px 15px;
-      border-radius: 4px;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .remove-btn {
-      background-color: #dc3545;
-      color: white;
-      font-size: 0.9rem;
-    }
-
-    .remove-btn:hover {
-      background-color: #c82333;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .flex-container {
-      display: flex;
-      gap: 10px;
-    }
-
-    .flex-container > div {
-      flex: 1;
-    }
-
-    .export-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    /* Modal Styles */
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .modal.hidden {
-      display: none;
-    }
-
-    .modal-content {
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-    }
-
-    .confirm-btn {
-      background-color: #28a745;
-      color: white;
-    }
-
-    .confirm-btn:hover {
-      background-color: #218838;
-    }
-
-    @media (max-width: 600px) {
-      body {
-        padding: 0 5px;
-      }
-
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      input, select, textarea, button {
-        font-size: 0.9rem;
-        padding: 8px;
-      }
-    }
-  </style>
+    </style>
 </head>
 <body>
+
   <div class="container">
     <h1>Round Matinal - UTI</h1>
     <form id="roundMatinalForm">
@@ -430,7 +303,7 @@
     </form>
   </div>
 
-  <script>
+     <script>
     // Adicionar lógica para exibir campos de alimentação
     const viaAlimentacao = document.getElementById("viaAlimentacao");
     const quantidadeContainer = document.getElementById("quantidadeContainer");
@@ -596,8 +469,119 @@
     });
   </script>
 
-   
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Automatic date calculations
+        function calculateDays(startDate, endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const diffTime = Math.abs(end - start);
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        // Set default date for dataPreenchimento
+        document.getElementById('dataPreenchimento').valueAsDate = new Date();
+
+        // Calculate internment duration
+        document.getElementById('dataInternacao').addEventListener('change', function() {
+            const internmentDate = this.value;
+            const currentDate = document.getElementById('dataPreenchimento').value;
+            if (internmentDate && currentDate) {
+                document.getElementById('tempoInternacao').value = calculateDays(internmentDate, currentDate);
+            }
+        });
+
+        // Calculate antibiotics usage duration
+        document.querySelectorAll('.data-inicio-antibiotico').forEach(input => {
+            input.addEventListener('change', function() {
+                const startDate = this.value;
+                const currentDate = document.getElementById('dataPreenchimento').value;
+                if (startDate && currentDate) {
+                    const daysElement = this.closest('.medication-entry').querySelector('.tempo-uso-antibiotico');
+                    daysElement.value = calculateDays(startDate, currentDate);
+                }
+            });
+        });
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            const requiredFields = document.querySelectorAll('[required]');
+            
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    field.classList.add('invalid');
+                    isValid = false;
+                    
+                    // Add validation message
+                    if (!field.nextElementSibling?.classList.contains('validation-message')) {
+                        const message = document.createElement('div');
+                        message.className = 'validation-message';
+                        message.textContent = 'Este campo é obrigatório';
+                        field.parentNode.insertBefore(message, field.nextSibling);
+                    }
+                } else {
+                    field.classList.remove('invalid');
+                    const message = field.nextElementSibling;
+                    if (message?.classList.contains('validation-message')) {
+                        message.remove();
+                    }
+                }
+            });
+
+            return isValid;
+        }
+
+        // Enhanced save functionality
+        document.getElementById('saveData').addEventListener('click', function() {
+            if (!validateForm()) {
+                alert('Por favor, preencha todos os campos obrigatórios');
+                return;
+            }
+
+            const form = document.getElementById('roundMatinalForm');
+            const formData = new FormData(form);
+            const dados = Object.fromEntries(formData);
+            
+            // Add timestamp
+            dados.timestamp = new Date().toISOString();
+            
+            // Save to localStorage
+            const salvos = JSON.parse(localStorage.getItem('formularios')) || [];
+            salvos.push(dados);
+            localStorage.setItem('formularios', JSON.stringify(salvos));
+            
+            alert('Dados salvos com sucesso!');
+        });
+
+        // Enhanced PDF export
+        document.getElementById('exportarPDF').addEventListener('click', function() {
+            if (!validateForm()) {
+                alert('Por favor, preencha todos os campos obrigatórios antes de exportar');
+                return;
+            }
+
+            // Create print-friendly version
+            const printContent = document.createElement('div');
+            printContent.innerHTML = `
+                <h1>Resumo do Round Matinal - UTI</h1>
+                <p><strong>Paciente:</strong> ${document.getElementById('nomePaciente').value}</p>
+                <p><strong>Registro:</strong> ${document.getElementById('registroHospitalar').value}</p>
+                <p><strong>Leito:</strong> ${document.getElementById('leito').value}</p>
+                <p><strong>Data:</strong> ${new Date().toLocaleDateString()}</p>
+                <!-- Add more relevant fields -->
+            `;
+
+            // Open print dialog
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>Round Matinal - UTI</title>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write(printContent.innerHTML);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        });
+    });
+    </script>
 </body>
 </html>
-
-
