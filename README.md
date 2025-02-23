@@ -282,6 +282,11 @@
 
         <label for="tempoInternacao">Tempo de Internação (dias):</label>
         <input type="text" id="tempoInternacao" name="tempoInternacao" readonly placeholder="Será calculado automaticamente">
+
+    <div>
+    <label for="dataPrevisaoAlta">Data de Previsão de Alta:</label>
+    <input type="date" id="dataPrevisaoAlta" name="dataPrevisaoAlta">
+    </div>
       
       </section>
       <!-- Ventilação Mecânica -->
