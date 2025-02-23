@@ -394,17 +394,29 @@
         </select>
       </section>
 
-      <!-- Trânsito Intestinal -->
-      <section class="section">
-        <h2>Trânsito Intestinal</h2>
-        <label for="transitoIntestinal">Trânsito Intestinal:</label>
-        <select id="transitoIntestinal" name="transitoIntestinal" required>
-          <option value="" disabled selected>Selecione uma opção</option>
-          <option value="Normal">Normal</option>
-          <option value="Constipado">Constipado</option>
-          <option value="Diarreia">Diarreia</option>
-        </select>
-      </section>
+     <!-- Modifique a seção Trânsito Intestinal no HTML -->
+    <section class="section">
+      <h2>Trânsito Intestinal</h2>
+      <label for="transitoIntestinal">Trânsito Intestinal:</label>
+      <select id="transitoIntestinal" name="transitoIntestinal" required>
+    <option value="" disabled selected>Selecione uma opção</option>
+    <option value="Normal">Normal</option>
+    <option value="Constipado">Constipado</option>
+    <option value="Diarreia">Diarreia</option>
+      </select>
+
+      <div class="flex-container">
+    <div>
+      <label for="dataUltimaEvacuacao">Data da Última Evacuação:</label>
+      <input type="datetime-local" id="dataUltimaEvacuacao" name="dataUltimaEvacuacao">
+    </div>
+    <div>
+      <label for="tempoDesdeEvacuacao">Tempo desde Última Evacuação:</label>
+      <input type="text" id="tempoDesdeEvacuacao" name="tempoDesdeEvacuacao" readonly 
+        placeholder="Será calculado automaticamente">
+    </div>
+      </div>
+    </section>
 
        <!-- Uso de Antibióticos -->
       <section class="section">
@@ -734,5 +746,67 @@
         });
     });
     </script>
+   
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // ... (mantenha os scripts anteriores)
+
+    // Função para calcular o tempo desde a última evacuação
+    function calcularTempoDesdeEvacuacao() {
+        const dataEvacuacao = new Date(document.getElementById('dataUltimaEvacuacao').value);
+        const agora = new Date();
+        
+        if (isNaN(dataEvacuacao.getTime())) {
+            document.getElementById('tempoDesdeEvacuacao').value = '';
+            return;
+        }
+
+        const diffMs = agora - dataEvacuacao;
+        const diffHoras = Math.floor(diffMs / (1000 * 60 * 60));
+        const diffDias = Math.floor(diffHoras / 24);
+        const horasRestantes = diffHoras % 24;
+
+        let resultado = '';
+        if (diffDias > 0) {
+            resultado += `${diffDias} dia(s) `;
+        }
+        if (horasRestantes > 0 || diffDias === 0) {
+            resultado += `${horasRestantes} hora(s)`;
+        }
+
+        document.getElementById('tempoDesdeEvacuacao').value = resultado;
+
+        // Atualizar estilo baseado no tempo
+        const tempoEvacuacaoInput = document.getElementById('tempoDesdeEvacuacao');
+        if (diffHoras >= 72) { // Mais de 72 horas
+            tempoEvacuacaoInput.style.color = 'red';
+            tempoEvacuacaoInput.style.fontWeight = 'bold';
+        } else if (diffHoras >= 48) { // Mais de 48 horas
+            tempoEvacuacaoInput.style.color = 'orange';
+            tempoEvacuacaoInput.style.fontWeight = 'bold';
+        } else {
+            tempoEvacuacaoInput.style.color = 'green';
+            tempoEvacuacaoInput.style.fontWeight = 'normal';
+        }
+    }
+
+    // Adicionar evento para calcular o tempo quando a data for alterada
+    document.getElementById('dataUltimaEvacuacao').addEventListener('change', calcularTempoDesdeEvacuacao);
+
+    // Atualizar o tempo a cada minuto
+    setInterval(calcularTempoDesdeEvacuacao, 60000);
+
+    // Definir a data e hora atual como valor máximo para o input
+    const dataUltimaEvacuacaoInput = document.getElementById('dataUltimaEvacuacao');
+    const agora = new Date();
+    const anoAtual = agora.getFullYear();
+    const mesAtual = String(agora.getMonth() + 1).padStart(2, '0');
+    const diaAtual = String(agora.getDate()).padStart(2, '0');
+    const horaAtual = String(agora.getHours()).padStart(2, '0');
+    const minutoAtual = String(agora.getMinutes()).padStart(2, '0');
+    
+    dataUltimaEvacuacaoInput.max = `${anoAtual}-${mesAtual}-${diaAtual}T${horaAtual}:${minutoAtual}`;
+});
+</script>
 </body>
 </html>
