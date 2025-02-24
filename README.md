@@ -159,7 +159,7 @@
       </section>
       
      <!-- Uso de Cateteres -->
-<section class="section">
+    <section class="section">
     <h2>Uso de Cateteres</h2>
     <div id="cateteresContainer">
         <!-- Entradas de cateteres serão adicionadas dinamicamente -->
@@ -874,7 +874,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .section-title { font-weight: bold; margin-bottom: 10px; }
                 .info-row { margin-bottom: 8px; }
             </style>
-            
+        </scritp>
             <div class="header">
                 <h1>Resumo do Round Matinal - UTI</h1>
                 <p>${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}</p>
@@ -911,7 +911,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="info-row"><strong>Última Evacuação:</strong> ${elements.tempoDesdeEvacuacao.value}</div>
             </div>
         `;
-
+<script>
         const printWindow = window.open('', '_blank');
         printWindow.document.write(printContent.innerHTML);
         printWindow.document.close();
