@@ -3,259 +3,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Round Matinal - UTI</title>
-    
     <style>
       /* Estilos Gerais */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f3f4f6;
-      margin: 0;
-      padding: 10px;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    h1, h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-    }
-
-    h2 {
-      font-size: 1.4rem;
-      color: #555;
-    }
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    input, select, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
-      box-sizing: border-box;
-    }
-
-    textarea {
-      resize: vertical;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 10px 15px;
-      border-radius: 4px;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .remove-btn {
-      background-color: #dc3545;
-      color: white;
-      font-size: 0.9rem;
-    }
-
-    .remove-btn:hover {
-      background-color: #c82333;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .flex-container {
-      display: flex;
-      gap: 10px;
-    }
-
-    .flex-container > div {
-      flex: 1;
-    }
-
-    .export-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    /* Modal Styles */
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .modal.hidden {
-      display: none;
-    }
-
-    .modal-content {
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
-    }
-
-    .modal-actions {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-    }
-
-    .confirm-btn {
-      background-color: #28a745;
-      color: white;
-    }
-
-    .confirm-btn:hover {
-      background-color: #218838;
-    }
-
-    @media (max-width: 600px) {
       body {
-        padding: 0 5px;
+        font-family: Arial, sans-serif;
+        background-color: #f3f4f6;
+        margin: 0;
+        padding: 10px;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      h1, h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
       }
 
       h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+        color: #555;
+      }
+
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
       }
 
       input, select, textarea, button {
-        font-size: 0.9rem;
-        padding: 8px;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        box-sizing: border-box;
       }
-    }
 
-    /* Add new styles for validation */
-    .invalid {
-        border-color: #dc3545;
-    }
+      textarea {
+        resize: vertical;
+      }
 
-    .validation-message {
-        color: #dc3545;
-        font-size: 0.8rem;
-        margin-top: -10px;
-        margin-bottom: 10px;
-    }
+      button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 10px 15px;
+        border-radius: 4px;
+      }
 
-    /* Add style for the print preview */
-    @media print {
-        .no-print {
-            display: none;
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .remove-btn {
+        background-color: #dc3545;
+        color: white;
+        font-size: 0.9rem;
+      }
+
+      .remove-btn:hover {
+        background-color: #c82333;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .flex-container {
+        display: flex;
+        gap: 10px;
+      }
+
+      .flex-container > div {
+        flex: 1;
+      }
+
+      .export-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .clear-btn {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      .clear-btn:hover {
+        background-color: #c82333;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 0 5px;
         }
-        .container {
-            box-shadow: none;
-            padding: 0;
+
+        h1 {
+          font-size: 1.5rem;
         }
-    }
-    /* Adicione estes estilos ao seu CSS existente */
-    .status-container {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
 
-    .status-indicator {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      margin-left: 10px;
-      background-color: #ccc;
-    }
-
-    .status-ok {
-      background-color: #28a745;
-    }
-
-    .status-warning {
-      background-color: #ffc107;
-    }
-
-    .status-danger {
-      background-color: #dc3545;
-      animation: pulse 1s infinite;
-    }
-
-    .alert-box {
-      background-color: #fff3cd;
-      border: 1px solid #ffeeba;
-      color: #856404;
-      padding: 10px;
-      border-radius: 4px;
-      margin: 10px 0;
-    }
-
-    .checkbox-container {
-      margin: 10px 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .checkbox-container input[type="checkbox"] {
-      width: auto;
-      margin: 0;
-    }
-
-    #tempoIntubacao.warning {
-      color: #856404;
-      background-color: #fff3cd;
-    }
-
-    #tempoIntubacao.danger {
-      color: #721c24;
-      background-color: #f8d7da;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
+        input, select, textarea, button {
+          font-size: 0.9rem;
+          padding: 8px;
+        }
+      }
     </style>
-    
 </head>
 <body>
-
   <div class="container">
     <h1>Round Matinal - UTI</h1>
     <form id="roundMatinalForm">
       <!-- Identificação do Paciente -->
       <section class="section">
         <h2>Identificação do Paciente</h2>
-        <label for="nomePaciente" aria-label="Nome do Paciente">Nome:</label>
+        <label for="nomePaciente">Nome:</label>
         <input type="text" id="nomePaciente" name="nomePaciente" placeholder="Digite o nome do paciente" required>
 
         <div class="flex-container">
@@ -263,7 +139,8 @@
             <label for="registroHospitalar">Registro Hospitalar:</label>
             <input type="text" id="registroHospitalar" name="registroHospitalar" placeholder="Digite o registro hospitalar" required>
           </div>
-           <label for="leito">Leito:</label>
+          <div>
+            <label for="leito">Leito:</label>
             <select id="leito" name="leito" required>
               <option value="" disabled selected>Selecione o leito</option>
               <option value="1">1</option>
@@ -279,27 +156,8 @@
             </select>
           </div>
         </div>
-
-        <div class="flex-container">
-          <div>
-            <label for="dataInternacao">Data de Internação:</label>
-            <input type="date" id="dataInternacao" name="dataInternacao" required>
-          </div>
-          <div>
-            <label for="dataPreenchimento">Data do Preenchimento:</label>
-            <input type="date" id="dataPreenchimento" name="dataPreenchimento">
-          </div>
-        </div>
-
-        <label for="tempoInternacao">Tempo de Internação (dias):</label>
-        <input type="text" id="tempoInternacao" name="tempoInternacao" readonly placeholder="Será calculado automaticamente">
-
-    <div>
-    <label for="dataPrevisaoAlta">Data de Previsão de Alta:</label>
-    <input type="date" id="dataPrevisaoAlta" name="dataPrevisaoAlta">
-    </div>
-      
       </section>
+      
  <!-- Uso de Cateteres -->
       <section class="section">
         <h2>Uso de Cateteres</h2>
@@ -329,7 +187,15 @@
         </div>
     
 
-         <label for="tipoSonda">Tipo de Sonda:</label>
+         <!-- Uso de Sondas -->
+      <section class="section">
+        <h2>Uso de Sondas</h2>
+        <div id="sondasContainer">
+         </div>
+        <button type="button" id="addSonda">Adicionar Sonda</button>
+         <button type="button" class="remove-btn">Remover</button>
+         
+      </section>
               <select class="tipo-sonda-dropdown" name="tipoSonda[]" required>
                 <option value="" disabled selected>Selecione uma opção</option>
                 <option value="SVD">SVD</option>
@@ -342,11 +208,8 @@
             <div class="hidden valor-drenado-container">
               <label for="valorDrenado">Valor Drenado (ml):</label>
               <input type="number" name="valorDrenado[]" placeholder="Insira o valor drenado">
-            </div>
-            <button type="button" class="remove-btn">Remover</button>
-            </div>
-           <button type="button" id="addSonda">Adicionar Sonda</button>
-          
+                    
+                   
       <!-- Ventilação Mecânica -->
     <section class="section">
       <h2>Ventilação Mecânica</h2>
@@ -1199,6 +1062,54 @@ document.addEventListener('DOMContentLoaded', function() {
         return entry;
       }
 
+       // Função para criar uma nova entrada de sonda
+      function createSondaEntry() {
+        const entry = document.createElement('div');
+        entry.classList.add('flex-container');
+        entry.innerHTML = `
+          <div>
+            <label for="tipoSonda">Tipo de Sonda:</label>
+            <select class="tipo-sonda-dropdown" name="tipoSonda[]" required>
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option value="SVD">SVD</option>
+              <option value="SR">SR</option>
+              <option value="Dreno de Torax">Dreno de Tórax</option>
+              <option value="Drenos Abdominais">Drenos Abdominais</option>
+              <option value="Outros Drenos">Outros Drenos</option>
+            </select>
+          </div>
+          <div class="hidden valor-drenado-container">
+            <label for="valorDrenado">Valor Drenado (ml):</label>
+            <input type="number" name="valorDrenado[]" placeholder="Insira o valor drenado">
+          </div>
+          <div>
+            <button type="button" class="remove-btn">Remover</button>
+          </div>
+        `;
+
+        // Listener para mostrar/ocultar o valor drenado
+        const tipoSondaDropdown = entry.querySelector('.tipo-sonda-dropdown');
+        const valorDrenadoContainer = entry.querySelector('.valor-drenado-container');
+
+        tipoSondaDropdown.addEventListener('change', function() {
+          if (
+            tipoSondaDropdown.value === 'Dreno de Torax' ||
+            tipoSondaDropdown.value === 'Drenos Abdominais' ||
+            tipoSondaDropdown.value === 'Outros Drenos'
+          ) {
+            valorDrenadoContainer.classList.remove('hidden');
+          } else {
+            valorDrenadoContainer.classList.add('hidden');
+          }
+        });
+
+        // Listener para remover a entrada
+        const removeButton = entry.querySelector('.remove-btn');
+        removeButton.addEventListener('click', () => entry.remove());
+
+        return entry;
+      }
+
       // Adiciona uma nova entrada de sonda
       addSondaButton.addEventListener('click', function() {
         const newEntry = createSondaEntry();
@@ -1211,8 +1122,6 @@ document.addEventListener('DOMContentLoaded', function() {
           form.reset(); // Reseta todos os campos do formulário para os valores padrão
 
           // Limpa campos calculados ou gerados dinamicamente
-          document.querySelectorAll('input[readonly]').forEach(input => input.value = '');
-          document.querySelectorAll('.hidden').forEach(el => el.classList.add('hidden'));
           sondasContainer.innerHTML = ''; // Remove todas as entradas de sondas
         }
       });
@@ -1221,7 +1130,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const initialSondaEntry = createSondaEntry();
       sondasContainer.appendChild(initialSondaEntry);
     });
-</script>
+  </script>
 
 </body>
 </html>
