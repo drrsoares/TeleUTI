@@ -327,7 +327,7 @@
           <label for="tempoUsoCateter">Tempo de Uso do Cateter:</label>
           <input type="text" id="tempoUsoCateter" name="tempoUsoCateter" readonly placeholder="Será calculado automaticamente">
         </div>
-      </section>
+    
 
          <label for="tipoSonda">Tipo de Sonda:</label>
               <select class="tipo-sonda-dropdown" name="tipoSonda[]" required>
@@ -343,14 +343,10 @@
               <label for="valorDrenado">Valor Drenado (ml):</label>
               <input type="number" name="valorDrenado[]" placeholder="Insira o valor drenado">
             </div>
-            <div>
-              <button type="button" class="remove-btn">Remover</button>
+            <button type="button" class="remove-btn">Remover</button>
             </div>
-          </div>
-        </div>
-        <button type="button" id="addSonda">Adicionar Sonda</button>
-      </section>
-      
+           <button type="button" id="addSonda">Adicionar Sonda</button>
+          
       <!-- Ventilação Mecânica -->
     <section class="section">
       <h2>Ventilação Mecânica</h2>
