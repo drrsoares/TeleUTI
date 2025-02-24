@@ -289,6 +289,42 @@
     </div>
       
       </section>
+ <!-- Uso de Cateteres -->
+      <section class="section">
+        <h2>Uso de Cateteres</h2>
+        <div class="checkbox-container">
+          <input type="checkbox" id="usoCateterCentral" name="usoCateterCentral">
+          <label for="usoCateterCentral">Cateter Central</label>
+        </div>
+
+        <div id="cateterCentralDetails" class="hidden">
+          <label for="localizacaoCateter">Localização:</label>
+          <select id="localizacaoCateter" name="localizacaoCateter">
+            <option value="" disabled selected>Selecione a localização</option>
+            <option value="VJD">VJD</option>
+            <option value="VJE">VJE</option>
+            <option value="VSCD">VSCD</option>
+            <option value="VSCE">VSCE</option>
+            <option value="FD">FD</option>
+            <option value="FE">FE</option>
+            <option value="Outro">Outro</option>
+          </select>
+
+          <label for="dataInsercaoCateter">Data de Inserção do Cateter:</label>
+          <input type="date" id="dataInsercaoCateter" name="dataInsercaoCateter">
+
+          <label for="tempoUsoCateter">Tempo de Uso do Cateter:</label>
+          <input type="text" id="tempoUsoCateter" name="tempoUsoCateter" readonly placeholder="Será calculado automaticamente">
+        </div>
+      </section>
+
+      <!-- Botões de Ação -->
+      <div class="export-buttons">
+        <button type="button" id="saveData">Salvar Dados</button>
+      </div>
+    </form>
+  </div>
+     
       <!-- Ventilação Mecânica -->
     <section class="section">
       <h2>Ventilação Mecânica</h2>
@@ -1041,6 +1077,46 @@ const calcularTempo = (inicio, fim) => {
     const diff = fim - inicio;
     return Math.floor(diff / (1000 * 60 * 60 * 24));
 };
+document.addEventListener('DOMContentLoaded', function() {
+      const usoCateterCentral = document.getElementById('usoCateterCentral');
+      const cateterCentralDetails = document.getElementById('cateterCentralDetails');
+      const dataInsercaoCateter = document.getElementById('dataInsercaoCateter');
+      const tempoUsoCateter = document.getElementById('tempoUsoCateter');
+
+      // Exibir ou ocultar os detalhes do cateter central
+      usoCateterCentral.addEventListener('change', function() {
+        if (usoCateterCentral.checked) {
+          cateterCentralDetails.classList.remove('hidden');
+        } else {
+          cateterCentralDetails.classList.add('hidden');
+          dataInsercaoCateter.value = '';
+          tempoUsoCateter.value = '';
+        }
+      });
+
+      // Calcular o tempo de uso do cateter
+      dataInsercaoCateter.addEventListener('change', function() {
+        const dataInsercao = new Date(dataInsercaoCateter.value);
+        const hoje = new Date();
+
+        if (isNaN(dataInsercao.getTime())) {
+          tempoUsoCateter.value = '';
+          return;
+        }
+
+        if (dataInsercao > hoje) {
+          alert('A data de inserção não pode ser no futuro.');
+          dataInsercaoCateter.value = '';
+          tempoUsoCateter.value = '';
+          return;
+        }
+
+        const diffMs = hoje - dataInsercao;
+        const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        tempoUsoCateter.value = `${diffDias} dia(s)`;
+      });
+    });
 </script>
 
 </body>
