@@ -158,34 +158,14 @@
         </div>
       </section>
       
-      <!-- Uso de Cateteres -->
-      <section class="section">
-        <h2>Uso de Cateteres</h2>
-        <div class="checkbox-container">
-          <input type="checkbox" id="usoCateterCentral" name="usoCateterCentral">
-          <label for="usoCateterCentral">Cateter Central</label>
-        </div>
-
-        <div id="cateterCentralDetails" class="hidden">
-          <label for="localizacaoCateter">Localização:</label>
-          <select id="localizacaoCateter" name="localizacaoCateter">
-            <option value="" disabled selected>Selecione a localização</option>
-            <option value="VJD">VJD</option>
-            <option value="VJE">VJE</option>
-            <option value="VSCD">VSCD</option>
-            <option value="VSCE">VSCE</option>
-            <option value="FD">FD</option>
-            <option value="FE">FE</option>
-            <option value="Outro">Outro</option>
-          </select>
-
-          <label for="dataInsercaoCateter">Data de Inserção do Cateter:</label>
-          <input type="date" id="dataInsercaoCateter" name="dataInsercaoCateter">
-
-          <label for="tempoUsoCateter">Tempo de Uso do Cateter:</label>
-          <input type="text" id="tempoUsoCateter" name="tempoUsoCateter" readonly placeholder="Será calculado automaticamente">
-        </div>
-      </section>
+     <!-- Uso de Cateteres -->
+<section class="section">
+    <h2>Uso de Cateteres</h2>
+    <div id="cateteresContainer">
+        <!-- Entradas de cateteres serão adicionadas dinamicamente -->
+    </div>
+    <button type="button" id="addCateter">Adicionar Cateter</button>
+</section>
 
       <!-- Uso de Sondas -->
       <section class="section">
@@ -957,51 +937,77 @@ document.addEventListener('DOMContentLoaded', function() {
       const dataInsercaoCateter = document.getElementById('dataInsercaoCateter');
       const tempoUsoCateter = document.getElementById('tempoUsoCateter');
 
-      // Exibir ou ocultar os detalhes do cateter central
-      usoCateterCentral.addEventListener('change', function() {
-        if (usoCateterCentral.checked) {
-          cateterCentralDetails.classList.remove('hidden');
-        } else {
-          cateterCentralDetails.classList.add('hidden');
-          dataInsercaoCateter.value = '';
-          tempoUsoCateter.value = '';
-        }
-      });
+      document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('roundMatinalForm');
+    const cateteresContainer = document.getElementById('cateteresContainer');
+    const addCateterButton = document.getElementById('addCateter');
+    const clearButton = document.getElementById('clearForm');
 
-      // Calcular o tempo de uso do cateter
-      dataInsercaoCateter.addEventListener('change', function() {
-        const dataInsercao = new Date(dataInsercaoCateter.value);
-        const hoje = new Date();
+    // Função para criar uma nova entrada de cateter
+    function createCateterEntry() {
+        const entry = document.createElement('div');
+        entry.classList.add('flex-container');
+        entry.innerHTML = `
+            <div>
+                <label for="tipoCateter">Tipo de Cateter:</label>
+                <select class="tipo-cateter-dropdown" name="tipoCateter[]" required>
+                    <option value="" disabled selected>Selecione uma opção</option>
+                    <option value="Cateter Central">Cateter Central</option>
+                    <option value="Cateter Periférico">Cateter Periférico</option>
+                    <option value="Outro">Outro</option>
+                </select>
+            </div>
+            <div class="hidden detalhes-cateter">
+                <label for="localizacaoCateter">Localização:</label>
+                <input type="text" name="localizacaoCateter[]" placeholder="Informe a localização">
+                <label for="dataInsercaoCateter">Data de Inserção:</label>
+                <input type="date" name="dataInsercaoCateter[]">
+                <label for="tempoUsoCateter">Tempo de Uso:</label>
+                <input type="text" name="tempoUsoCateter[]" readonly placeholder="Será calculado automaticamente">
+            </div>
+            <div>
+                <button type="button" class="remove-btn">Remover</button>
+            </div>
+        `;
 
-        if (isNaN(dataInsercao.getTime())) {
-          tempoUsoCateter.value = '';
-          return;
-        }
+        // Listener para mostrar/ocultar os detalhes do cateter
+        const tipoCateterDropdown = entry.querySelector('.tipo-cateter-dropdown');
+        const detalhesCateter = entry.querySelector('.detalhes-cateter');
 
-        if (dataInsercao > hoje) {
-          alert('A data de inserção não pode ser no futuro.');
-          dataInsercaoCateter.value = '';
-          tempoUsoCateter.value = '';
-          return;
-        }
+        tipoCateterDropdown.addEventListener('change', function () {
+            if (tipoCateterDropdown.value === 'Cateter Central' || tipoCateterDropdown.value === 'Outro') {
+                detalhesCateter.classList.remove('hidden');
+            } else {
+                detalhesCateter.classList.add('hidden');
+            }
+        });
 
-        const diffMs = hoje - dataInsercao;
-        const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+        // Listener para remover a entrada
+        const removeButton = entry.querySelector('.remove-btn');
+        removeButton.addEventListener('click', () => entry.remove());
 
-        tempoUsoCateter.value = `${diffDias} dia(s)`;
-      });
+        return entry;
+    }
+
+    // Adiciona uma nova entrada de cateter ao clicar no botão
+    addCateterButton.addEventListener('click', function () {
+        const newEntry = createCateterEntry();
+        cateteresContainer.appendChild(newEntry);
     });
-    // Função para limpar o formulário
-      clearButton.addEventListener('click', function() {
+
+    // Reseta o formulário e limpa as entradas de cateteres
+    clearButton.addEventListener('click', function () {
         if (confirm('Tem certeza de que deseja limpar o formulário?')) {
-          form.reset(); // Reseta todos os campos do formulário para os valores padrão
-          
-          // Limpa campos calculados ou gerados dinamicamente
-          document.querySelectorAll('input[readonly]').forEach(input => input.value = '');
-          document.querySelectorAll('.hidden').forEach(el => el.classList.add('hidden'));
+            form.reset(); // Reseta os campos do formulário para os valores padrão
+            cateteresContainer.innerHTML = ''; // Remove todas as entradas de cateteres
         }
-      });
     });
+
+    // Adiciona uma entrada inicial de cateter no carregamento
+    const initialCateterEntry = createCateterEntry();
+    cateteresContainer.appendChild(initialCateterEntry);
+});
+
     document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('roundMatinalForm');
     const sondasContainer = document.getElementById('sondasContainer');
