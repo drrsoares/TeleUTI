@@ -263,9 +263,20 @@
             <label for="registroHospitalar">Registro Hospitalar:</label>
             <input type="text" id="registroHospitalar" name="registroHospitalar" placeholder="Digite o registro hospitalar" required>
           </div>
-          <div>
-            <label for="leito">Leito:</label>
-            <input type="text" id="leito" name="leito" placeholder="Digite o número do leito" required>
+           <label for="leito">Leito:</label>
+            <select id="leito" name="leito" required>
+              <option value="" disabled selected>Selecione o leito</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
           </div>
         </div>
 
