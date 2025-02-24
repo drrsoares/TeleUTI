@@ -931,151 +931,119 @@ const calcularTempo = (inicio, fim) => {
     const diff = fim - inicio;
     return Math.floor(diff / (1000 * 60 * 60 * 24));
 };
-document.addEventListener('DOMContentLoaded', function() {
-      const usoCateterCentral = document.getElementById('usoCateterCentral');
-      const cateterCentralDetails = document.getElementById('cateterCentralDetails');
-      const dataInsercaoCateter = document.getElementById('dataInsercaoCateter');
-      const tempoUsoCateter = document.getElementById('tempoUsoCateter');
-
-      document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('roundMatinalForm');
-    const cateteresContainer = document.getElementById('cateteresContainer');
-    const addCateterButton = document.getElementById('addCateter');
-    const clearButton = document.getElementById('clearForm');
-
-    // Função para criar uma nova entrada de cateter
-    function createCateterEntry() {
-        const entry = document.createElement('div');
-        entry.classList.add('flex-container');
-        entry.innerHTML = `
-            <div>
-                <label for="tipoCateter">Tipo de Cateter:</label>
-                <select class="tipo-cateter-dropdown" name="tipoCateter[]" required>
-                    <option value="" disabled selected>Selecione uma opção</option>
-                    <option value="Cateter Central">Cateter Central</option>
-                    <option value="Cateter Periférico">Cateter Periférico</option>
-                    <option value="Outro">Outro</option>
-                </select>
-            </div>
-            <div class="hidden detalhes-cateter">
-                <label for="localizacaoCateter">Localização:</label>
-                <input type="text" name="localizacaoCateter[]" placeholder="Informe a localização">
-                <label for="dataInsercaoCateter">Data de Inserção:</label>
-                <input type="date" name="dataInsercaoCateter[]">
-                <label for="tempoUsoCateter">Tempo de Uso:</label>
-                <input type="text" name="tempoUsoCateter[]" readonly placeholder="Será calculado automaticamente">
-            </div>
-            <div>
-                <button type="button" class="remove-btn">Remover</button>
-            </div>
-        `;
-
-        // Listener para mostrar/ocultar os detalhes do cateter
-        const tipoCateterDropdown = entry.querySelector('.tipo-cateter-dropdown');
-        const detalhesCateter = entry.querySelector('.detalhes-cateter');
-
-        tipoCateterDropdown.addEventListener('change', function () {
-            if (tipoCateterDropdown.value === 'Cateter Central' || tipoCateterDropdown.value === 'Outro') {
-                detalhesCateter.classList.remove('hidden');
-            } else {
-                detalhesCateter.classList.add('hidden');
-            }
-        });
-
-        // Listener para remover a entrada
-        const removeButton = entry.querySelector('.remove-btn');
-        removeButton.addEventListener('click', () => entry.remove());
-
-        return entry;
-    }
-
-    // Adiciona uma nova entrada de cateter ao clicar no botão
-    addCateterButton.addEventListener('click', function () {
-        const newEntry = createCateterEntry();
-        cateteresContainer.appendChild(newEntry);
-    });
-
-    // Reseta o formulário e limpa as entradas de cateteres
-    clearButton.addEventListener('click', function () {
-        if (confirm('Tem certeza de que deseja limpar o formulário?')) {
-            form.reset(); // Reseta os campos do formulário para os valores padrão
-            cateteresContainer.innerHTML = ''; // Remove todas as entradas de cateteres
-        }
-    });
-
-    // Adiciona uma entrada inicial de cateter no carregamento
-    const initialCateterEntry = createCateterEntry();
-    cateteresContainer.appendChild(initialCateterEntry);
-});
-
-    document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById('roundMatinalForm');
-    const sondasContainer = document.getElementById('sondasContainer');
-    const addSondaButton = document.getElementById('addSonda');
-    const clearButton = document.getElementById('clearForm');
-
-    // Função para criar uma nova entrada de sonda
-    function createSondaEntry() {
-        const entry = document.createElement('div');
-        entry.classList.add('flex-container');
-        entry.innerHTML = `
-            <div>
-                <label for="tipoSonda">Tipo de Sonda:</label>
-                <select class="tipo-sonda-dropdown" name="tipoSonda[]" required>
-                    <option value="" disabled selected>Selecione uma opção</option>
-                    <option value="SVD">SVD</option>
-                    <option value="SR">SR</option>
-                    <option value="Dreno de Torax">Dreno de Tórax</option>
-                    <option value="Drenos Abdominais">Drenos Abdominais</option>
-                    <option value="Outros Drenos">Outros Drenos</option>
-                </select>
-            </div>
-            <div class="hidden valor-drenado-container">
-                <label for="valorDrenado">Valor Drenado (ml):</label>
-                <input type="number" name="valorDrenado[]" placeholder="Insira o valor drenado">
-            </div>
-            <div>
-                <button type="button" class="remove-btn">Remover</button>
-            </div>
-        `;
-
-        // Listener para mostrar/ocultar o valor drenado
-        const tipoSondaDropdown = entry.querySelector('.tipo-sonda-dropdown');
-        const valorDrenadoContainer = entry.querySelector('.valor-drenado-container');
-
-        tipoSondaDropdown.addEventListener('change', function () {
-            if (['Dreno de Torax', 'Drenos Abdominais', 'Outros Drenos'].includes(tipoSondaDropdown.value)) {
-                valorDrenadoContainer.classList.remove('hidden');
-            } else {
-                valorDrenadoContainer.classList.add('hidden');
-            }
-        });
-
-        // Listener para remover a entrada
-        const removeButton = entry.querySelector('.remove-btn');
-        removeButton.addEventListener('click', () => entry.remove());
-
-        return entry;
-    }
-
-    // Adiciona uma nova entrada de sonda ao clicar no botão
-    addSondaButton.addEventListener('click', function () {
-        const newEntry = createSondaEntry();
-        sondasContainer.appendChild(newEntry);
-    });
-
-    // Reseta o formulário e limpa as entradas de sondas
-    clearButton.addEventListener('click', function () {
-        if (confirm('Tem certeza de que deseja limpar o formulário?')) {
-            form.reset(); // Reseta os campos do formulário para os valores padrão
-            sondasContainer.innerHTML = ''; // Remove todas as entradas de sondas
-        }
-    });
-
-    // Adiciona uma entrada inicial de sonda no carregamento
-    const initialSondaEntry = createSondaEntry();
-    sondasContainer.appendChild(initialSondaEntry);
-});
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('roundMatinalForm');
+            const cateteresContainer = document.getElementById('cateteresContainer');
+            const sondasContainer = document.getElementById('sondasContainer');
+            const addCateterButton = document.getElementById('addCateter');
+            const addSondaButton = document.getElementById('addSonda');
+            const clearButton = document.getElementById('clearForm');
+
+            // Função para criar uma nova entrada de cateter
+            function createCateterEntry() {
+                const entry = document.createElement('div');
+                entry.classList.add('flex-container');
+                entry.innerHTML = `
+                    <div>
+                        <label for="tipoCateter">Tipo de Cateter:</label>
+                        <select class="tipo-cateter-dropdown" name="tipoCateter[]" required>
+                            <option value="" disabled selected>Selecione uma opção</option>
+                            <option value="Cateter Central">Cateter Central</option>
+                            <option value="Cateter Periférico">Cateter Periférico</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="hidden detalhes-cateter">
+                        <label for="localizacaoCateter">Localização:</label>
+                        <input type="text" name="localizacaoCateter[]" placeholder="Informe a localização">
+                        <label for="dataInsercaoCateter">Data de Inserção:</label>
+                        <input type="date" name="dataInsercaoCateter[]">
+                    </div>
+                    <div>
+                        <button type="button" class="remove-btn">Remover</button>
+                    </div>
+                `;
+
+                const tipoCateterDropdown = entry.querySelector('.tipo-cateter-dropdown');
+                const detalhesCateter = entry.querySelector('.detalhes-cateter');
+
+                tipoCateterDropdown.addEventListener('change', function () {
+                    if (tipoCateterDropdown.value === 'Cateter Central' || tipoCateterDropdown.value === 'Outro') {
+                        detalhesCateter.classList.remove('hidden');
+                    } else {
+                        detalhesCateter.classList.add('hidden');
+                    }
+                });
+
+                const removeButton = entry.querySelector('.remove-btn');
+                removeButton.addEventListener('click', () => entry.remove());
+
+                return entry;
+            }
+
+            // Função para criar uma nova entrada de sonda
+            function createSondaEntry() {
+                const entry = document.createElement('div');
+                entry.classList.add('flex-container');
+                entry.innerHTML = `
+                    <div>
+                        <label for="tipoSonda">Tipo de Sonda:</label>
+                        <select class="tipo-sonda-dropdown" name="tipoSonda[]" required>
+                            <option value="" disabled selected>Selecione uma opção</option>
+                            <option value="SVD">SVD</option>
+                            <option value="SR">SR</option>
+                            <option value="Dreno de Torax">Dreno de Tórax</option>
+                            <option value="Drenos Abdominais">Drenos Abdominais</option>
+                            <option value="Outros Drenos">Outros Drenos</option>
+                        </select>
+                    </div>
+                    <div class="hidden valor-drenado-container">
+                        <label for="valorDrenado">Valor Drenado (ml):</label>
+                        <input type="number" name="valorDrenado[]" placeholder="Insira o valor drenado">
+                    </div>
+                    <div>
+                        <button type="button" class="remove-btn">Remover</button>
+                    </div>
+                `;
+
+                const tipoSondaDropdown = entry.querySelector('.tipo-sonda-dropdown');
+                const valorDrenadoContainer = entry.querySelector('.valor-drenado-container');
+
+                tipoSondaDropdown.addEventListener('change', function () {
+                    if (['Dreno de Torax', 'Drenos Abdominais', 'Outros Drenos'].includes(tipoSondaDropdown.value)) {
+                        valorDrenadoContainer.classList.remove('hidden');
+                    } else {
+                        valorDrenadoContainer.classList.add('hidden');
+                    }
+                });
+
+                const removeButton = entry.querySelector('.remove-btn');
+                removeButton.addEventListener('click', () => entry.remove());
+
+                return entry;
+            }
+
+            // Adiciona uma entrada inicial para cateter e sonda
+            cateteresContainer.appendChild(createCateterEntry());
+            sondasContainer.appendChild(createSondaEntry());
+
+            // Botões para adicionar novas entradas
+            addCateterButton.addEventListener('click', () => cateteresContainer.appendChild(createCateterEntry()));
+            addSondaButton.addEventListener('click', () => sondasContainer.appendChild(createSondaEntry()));
+
+            // Botão para limpar o formulário
+            clearButton.addEventListener('click', function () {
+                if (confirm('Tem certeza de que deseja limpar o formulário?')) {
+                    form.reset();
+                    cateteresContainer.innerHTML = '';
+                    sondasContainer.innerHTML = '';
+                    cateteresContainer.appendChild(createCateterEntry());
+                    sondasContainer.appendChild(createSondaEntry());
+                }
+            });
+        });
+    </script>
 </body>
 </html>
