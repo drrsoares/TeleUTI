@@ -317,14 +317,7 @@
           <input type="text" id="tempoUsoCateter" name="tempoUsoCateter" readonly placeholder="Será calculado automaticamente">
         </div>
       </section>
-
-      <!-- Botões de Ação -->
-      <div class="export-buttons">
-        <button type="button" id="saveData">Salvar Dados</button>
-      </div>
-    </form>
-  </div>
-     
+      
       <!-- Ventilação Mecânica -->
     <section class="section">
       <h2>Ventilação Mecânica</h2>
