@@ -328,6 +328,28 @@
           <input type="text" id="tempoUsoCateter" name="tempoUsoCateter" readonly placeholder="Será calculado automaticamente">
         </div>
       </section>
+
+         <label for="tipoSonda">Tipo de Sonda:</label>
+              <select class="tipo-sonda-dropdown" name="tipoSonda[]" required>
+                <option value="" disabled selected>Selecione uma opção</option>
+                <option value="SVD">SVD</option>
+                <option value="SR">SR</option>
+                <option value="Dreno de Torax">Dreno de Tórax</option>
+                <option value="Drenos Abdominais">Drenos Abdominais</option>
+                <option value="Outros Drenos">Outros Drenos</option>
+              </select>
+            </div>
+            <div class="hidden valor-drenado-container">
+              <label for="valorDrenado">Valor Drenado (ml):</label>
+              <input type="number" name="valorDrenado[]" placeholder="Insira o valor drenado">
+            </div>
+            <div>
+              <button type="button" class="remove-btn">Remover</button>
+            </div>
+          </div>
+        </div>
+        <button type="button" id="addSonda">Adicionar Sonda</button>
+      </section>
       
       <!-- Ventilação Mecânica -->
     <section class="section">
@@ -1132,6 +1154,76 @@ document.addEventListener('DOMContentLoaded', function() {
           document.querySelectorAll('.hidden').forEach(el => el.classList.add('hidden'));
         }
       });
+    });
+     // Função para criar uma nova entrada de sonda
+      function createSondaEntry() {
+        const entry = document.createElement('div');
+        entry.classList.add('flex-container');
+        entry.innerHTML = `
+          <div>
+            <label for="tipoSonda">Tipo de Sonda:</label>
+            <select class="tipo-sonda-dropdown" name="tipoSonda[]" required>
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option value="SVD">SVD</option>
+              <option value="SR">SR</option>
+              <option value="Dreno de Torax">Dreno de Tórax</option>
+              <option value="Drenos Abdominais">Drenos Abdominais</option>
+              <option value="Outros Drenos">Outros Drenos</option>
+            </select>
+          </div>
+          <div class="hidden valor-drenado-container">
+            <label for="valorDrenado">Valor Drenado (ml):</label>
+            <input type="number" name="valorDrenado[]" placeholder="Insira o valor drenado">
+          </div>
+          <div>
+            <button type="button" class="remove-btn">Remover</button>
+          </div>
+        `;
+
+        // Listener para mostrar/ocultar o valor drenado
+        const tipoSondaDropdown = entry.querySelector('.tipo-sonda-dropdown');
+        const valorDrenadoContainer = entry.querySelector('.valor-drenado-container');
+
+        tipoSondaDropdown.addEventListener('change', function() {
+          if (
+            tipoSondaDropdown.value === 'Dreno de Torax' ||
+            tipoSondaDropdown.value === 'Drenos Abdominais' ||
+            tipoSondaDropdown.value === 'Outros Drenos'
+          ) {
+            valorDrenadoContainer.classList.remove('hidden');
+          } else {
+            valorDrenadoContainer.classList.add('hidden');
+          }
+        });
+
+        // Listener para remover a entrada
+        const removeButton = entry.querySelector('.remove-btn');
+        removeButton.addEventListener('click', () => entry.remove());
+
+        return entry;
+      }
+
+      // Adiciona uma nova entrada de sonda
+      addSondaButton.addEventListener('click', function() {
+        const newEntry = createSondaEntry();
+        sondasContainer.appendChild(newEntry);
+      });
+
+      // Função para limpar o formulário
+      clearButton.addEventListener('click', function() {
+        if (confirm('Tem certeza de que deseja limpar o formulário?')) {
+          form.reset(); // Reseta todos os campos do formulário para os valores padrão
+
+          // Limpa campos calculados ou gerados dinamicamente
+          document.querySelectorAll('input[readonly]').forEach(input => input.value = '');
+          document.querySelectorAll('.hidden').forEach(el => el.classList.add('hidden'));
+          sondasContainer.innerHTML = ''; // Remove todas as entradas de sondas
+        }
+      });
+
+      // Adiciona uma entrada inicial de sonda
+      const initialSondaEntry = createSondaEntry();
+      sondasContainer.appendChild(initialSondaEntry);
     });
 </script>
 
