@@ -593,6 +593,7 @@
         <button type="button" id="saveData">Salvar Dados</button>
         <button type="button" id="exportarCSV">Exportar para CSV</button>
         <button type="button" id="exportarPDF">Exportar Resumo em PDF</button>
+        <button type="button" id="clearForm" class="clear-btn">Limpar Formulário</button>
       </div>
     </form>
      </div>
@@ -1108,6 +1109,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
         tempoUsoCateter.value = `${diffDias} dia(s)`;
+      });
+    });
+    // Função para limpar o formulário
+      clearButton.addEventListener('click', function() {
+        if (confirm('Tem certeza de que deseja limpar o formulário?')) {
+          form.reset(); // Reseta todos os campos do formulário para os valores padrão
+          
+          // Limpa campos calculados ou gerados dinamicamente
+          document.querySelectorAll('input[readonly]').forEach(input => input.value = '');
+          document.querySelectorAll('.hidden').forEach(el => el.classList.add('hidden'));
+        }
       });
     });
 </script>
