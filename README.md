@@ -983,6 +983,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 return entry;
             }
 
+     // Listener para calcular o tempo de uso do cateter
+        const dataInsercaoInput = entry.querySelector('.data-insercao-cateter');
+        const tempoUsoInput = entry.querySelector('.tempo-uso-cateter');
+
+        dataInsercaoInput.addEventListener('change', function () {
+            if (!dataInsercaoInput.value) {
+                tempoUsoInput.value = '';
+                return;
+            }
+
+            const dataInsercao = new Date(dataInsercaoInput.value);
+            const hoje = new Date();
+
+            if (dataInsercao > hoje) {
+                alert('A data de inserção não pode ser no futuro.');
+                dataInsercaoInput.value = '';
+                tempoUsoInput.value = '';
+                return;
+            }
+
+            const diffMs = hoje - dataInsercao;
+            const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            tempoUsoInput.value = `${diffDias} dia(s)`;
+        });
+
+    
             // Função para criar uma nova entrada de sonda
             function createSondaEntry() {
                 const entry = document.createElement('div');
