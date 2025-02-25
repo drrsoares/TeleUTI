@@ -1929,13 +1929,31 @@ const calcularTempo = (inicio, fim) => {
 </script>
 <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('roundMatinalForm');
             const cateteresContainer = document.getElementById('cateteresContainer');
-            const sondasContainer = document.getElementById('sondasContainer');
             const addCateterButton = document.getElementById('addCateter');
-            const addSondaButton = document.getElementById('addSonda');
             const clearButton = document.getElementById('clearForm');
 
+            // Função para calcular o tempo de uso do cateter
+            function calcularTempoUso(dataInsercaoInput, tempoUsoInput) {
+                const dataInsercao = new Date(dataInsercaoInput.value);
+                const hoje = new Date();
+
+                if (!dataInsercaoInput.value) {
+                    tempoUsoInput.value = '';
+                    return;
+                }
+
+                if (dataInsercao > hoje) {
+                    alert('A data de inserção não pode ser no futuro.');
+                    dataInsercaoInput.value = '';
+                    tempoUsoInput.value = '';
+                    return;
+                }
+
+                const diffMs = hoje - dataInsercao; // Diferença em milissegundos
+                const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24)); // Converter para dias
+                tempoUsoInput.value = `${diffDias} dia(s)`;
+            }
             // Função para criar uma nova entrada de cateter
             function createCateterEntry() {
                 const entry = document.createElement('div');
@@ -1989,31 +2007,7 @@ const calcularTempo = (inicio, fim) => {
                 return entry;
             }
 
-            // Listener para calcular o tempo de uso do cateter
-        const dataInsercaoInput = entry.querySelector('.data-insercao-cateter');
-        const tempoUsoInput = entry.querySelector('.tempo-uso-cateter');
-
-        dataInsercaoInput.addEventListener('change', function () {
-            if (!dataInsercaoInput.value) {
-                tempoUsoInput.value = '';
-                return;
-            }
-
-            const dataInsercao = new Date(dataInsercaoInput.value);
-            const hoje = new Date();
-
-            if (dataInsercao > hoje) {
-                alert('A data de inserção não pode ser no futuro.');
-                dataInsercaoInput.value = '';
-                tempoUsoInput.value = '';
-                return;
-            }
-
-            const diffMs = hoje - dataInsercao; // Diferença em milissegundos
-            const diffDias = Math.floor(diffMs / (1000 * 60 * 60 * 24)); // Converter para dias
-            tempoUsoInput.value = `${diffDias} dia(s)`;
-        });
-
+           
         // Listener para remover a entrada
         const removeButton = entry.querySelector('.remove-btn');
         removeButton.addEventListener('click', () => entry.remove());
