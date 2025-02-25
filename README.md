@@ -413,8 +413,11 @@
               <option value="Vancomicina">Vancomicina</option>
               <option value="Ceftriaxone">Ceftriaxone</option>
               <option value="Meropenem">Meropenem</option>
-              <option value="Tazocin">Tazocin</option>
+              <option value="Tazo-Pipe">Tazo</option>
               <option value="Poli B">Poli B</option>
+              <option value="Metronidazol">Metro</option>
+              <option value="Fluconazol">Fluco</option>
+              <option value="Cefalotina">Cefalo</option>
               <option value="Outro">Outro</option>
             </select>
 
