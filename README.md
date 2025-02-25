@@ -175,7 +175,20 @@
         </div>
         <button type="button" id="addSonda">Adicionar Sonda</button>
       </section>
-        
+
+        <!-- Uso de Drogas Vasoativas -->
+            <section>
+                <h2>Uso de Drogas Vasoativas</h2>
+                <div id="drogasContainer">
+                    <!-- Entradas de drogas serão adicionadas dinamicamente -->
+                </div>
+                <button type="button" id="addDroga">Adicionar Droga</button>
+            </section>
+
+            <!-- Botão para limpar formulário -->
+            <button type="button" id="clearForm" class="clear-btn">Limpar Formulário</button>
+        </form>
+    </div>
                    
       <!-- Ventilação Mecânica -->
     <section class="section">
@@ -1931,11 +1944,13 @@ const calcularTempo = (inicio, fim) => {
 };
 </script>
 <script>
-        document.addEventListener('DOMContentLoaded', function () {
+       document.addEventListener('DOMContentLoaded', function () {
             const cateteresContainer = document.getElementById('cateteresContainer');
             const sondasContainer = document.getElementById('sondasContainer');
+            const drogasContainer = document.getElementById('drogasContainer');
             const addCateterButton = document.getElementById('addCateter');
             const addSondaButton = document.getElementById('addSonda');
+            const addDrogaButton = document.getElementById('addDroga');
             const clearButton = document.getElementById('clearForm');
 
             // Função para calcular tempo de uso
@@ -1960,7 +1975,7 @@ const calcularTempo = (inicio, fim) => {
                 tempoUsoInput.value = `${diffDias} dia(s)`;
             }
 
-            // Função para criar entradas (cateter ou sonda)
+            // Função para criar entradas (cateter, sonda ou droga vasoativa)
             function createEntry(type) {
                 const entry = document.createElement('div');
                 entry.classList.add('flex-container');
@@ -2031,6 +2046,30 @@ const calcularTempo = (inicio, fim) => {
                             <button type="button" class="remove-btn">Remover</button>
                         </div>
                     `;
+                } else if (type === 'droga') {
+                    entry.innerHTML = `
+                        <div>
+                            <label for="drogaVasoativa">Droga Vasoativa:</label>
+                            <select name="drogaVasoativa[]" required>
+                                <option value="" disabled selected>Selecione uma droga</option>
+                                <option value="Noradrenalina">Noradrenalina</option>
+                                <option value="Vasopressina">Vasopressina</option>
+                                <option value="Dobutamina">Dobutamina</option>
+                                <option value="Adrenalina">Adrenalina</option>
+                                <option value="Nitroprussiato">Nitroprussiato</option>
+                                <option value="Nitroglicerina">Nitroglicerina</option>
+                                <option value="Amiodarona">Amiodarona</option>
+                                <option value="Nenhuma">Nenhuma</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="vazaoDroga">Vazão (ml/h):</label>
+                            <input type="number" name="vazaoDroga[]" placeholder="Informe a vazão">
+                        </div>
+                        <div>
+                            <button type="button" class="remove-btn">Remover</button>
+                        </div>
+                    `;
                 }
 
                 // Listener para remover a entrada
@@ -2040,21 +2079,25 @@ const calcularTempo = (inicio, fim) => {
                 return entry;
             }
 
-            // Adiciona uma entrada inicial para cateter e sonda
+            // Adiciona uma entrada inicial para cateter, sonda e droga vasoativa
             cateteresContainer.appendChild(createEntry('cateter'));
             sondasContainer.appendChild(createEntry('sonda'));
+            drogasContainer.appendChild(createEntry('droga'));
 
             // Botões para adicionar novas entradas
             addCateterButton.addEventListener('click', () => cateteresContainer.appendChild(createEntry('cateter')));
             addSondaButton.addEventListener('click', () => sondasContainer.appendChild(createEntry('sonda')));
+            addDrogaButton.addEventListener('click', () => drogasContainer.appendChild(createEntry('droga')));
 
             // Botão para limpar o formulário
             clearButton.addEventListener('click', function () {
                 if (confirm('Tem certeza de que deseja limpar o formulário?')) {
                     cateteresContainer.innerHTML = '';
                     sondasContainer.innerHTML = '';
+                    drogasContainer.innerHTML = '';
                     cateteresContainer.appendChild(createEntry('cateter'));
                     sondasContainer.appendChild(createEntry('sonda'));
+                    drogasContainer.appendChild(createEntry('droga'));
                 }
             });
         });
